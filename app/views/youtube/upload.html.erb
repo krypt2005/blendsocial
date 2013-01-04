@@ -1,0 +1,13 @@
+
+<% if $client.present? %>
+<%= form_tag '/uploadvideo', :multipart => true do %>
+ <%= label_tag :title %>
+  <%= text_field_tag :title %><br/>
+  <%= label_tag :file %>
+  <%= file_field_tag :file %><br/><br/>
+  <%= submit_tag "Upload video" %>
+<% end %>
+
+<%else%>
+   Please Login to Youtube
+<% end %>

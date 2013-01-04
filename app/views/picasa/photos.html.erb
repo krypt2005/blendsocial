@@ -1,0 +1,68 @@
+
+<p>
+<%if $picasa.present?%>
+ <%= form_tag '/picasacreatealbum' do |f| %>
+	    <div class="field">
+	    <%= label_tag 'Create Album' %>
+	    Name : <%= text_field_tag 'album' %>
+	  </div>
+	 <div class="actions">
+	    <%= submit_tag "Create" %>
+	  </div>
+ <%end%>
+
+</p>
+
+<h2>Albums & Photos</h2>
+
+<% @albums.each do |album| %>
+<p>Album Name:<%= album.title%>  <a href='/picalbumdelete?id=<%=album.id%>'>DeleteAlbum</a></p>
+<% if $picasa.get_photos_by_album_id(album.id).present? %>
+<p>Photos:</p>
+<ul class="thumbnails">
+<% $picasa.get_photos_by_album_id(album.id).each do  |photo| %> 
+ <li class="span4">
+
+	 <a href="<%= photo.url %>" class="thumbnail">
+	 
+	 <img src="<%= photo.url %>" alt="">
+	 </a> <br/>
+	<%if !photo.caption.nil? %> Caption: <%= photo.caption %> <% end %>
+	 
+	
+ </li>
+<%end%>
+</ul>
+<% else %>
+<p>No photos in this album</p>
+<%end%>
+</br>
+<%end%>
+
+
+<p>
+
+ <%= form_tag '/piccreatephotos' ,:id =>'picphotoform' ,  :multipart => true do |f| %>
+	    <div class="field">
+	    <%= label_tag 'Upload Photos to Album' %>
+	    <select id="picphotoform[albump]" name="picphotoform[albump]">
+			<% @albums.each do |album| %>
+			   <option value="<%=album.id%>"><%=album.title%></option>
+			<%end%>
+	      </select>
+	  </div>
+	 
+	  
+	   <div class="field">
+	    <%= label_tag 'Photo' %>
+	    <%= file_field_tag 'photo' %>
+	  </div><br/><br/>
+	 <div class="actions">
+	    <%= submit_tag "Upload Photos" %>
+	  </div>
+ <%end%>
+ 
+ </p>
+ <%else%>
+    Please Login To Picasa
+  <%end%>

@@ -1,0 +1,19 @@
+<h1><%= @user.username %> Images</h1>
+<% @recent_media_items.each do |media| %>
+ <div style="border:1px solid gray;padding:5px;">
+<img src="<%= media.images.thumbnail.url%>">
+Caption:<%=media.caption.text%>
+
+
+ <%if media.comments.data.length > 0 %>
+ <br/><br/>
+ <div style="border:1px solid gray;padding:5px;">
+Comments:<br/>
+<% media.comments.data.each do |cmt|%>
+        <img src="<%=cmt.from.profile_picture%>" width="50" height="50"/> <%=cmt.from.username%> commented : <%=cmt.text%><br/><br/>
+         <% end%>
+           </div>
+         <% end%>
+
+</div><br/><br/>
+<% end%>

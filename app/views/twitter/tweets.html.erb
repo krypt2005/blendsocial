@@ -1,0 +1,34 @@
+<p>Tweet Here</p>
+<%= form_tag '/changetwstatus' ,  :multipart => true do |f| %>
+	    <div class="field">
+	    <%= label_tag 'Tweet' %>
+	    <%= text_field_tag 'status' %>
+	  </div>
+	    <div class="field">
+	    <%= label_tag 'Photo' %>
+	    <%= file_field_tag 'photo' %>
+	  </div>
+	 <div class="actions">
+	    <%= submit_tag "Tweet" %>
+	  </div>
+ <%end%>
+ 
+ 
+ <p>Your Tweets</p>
+ 
+
+  <table class="table table-striped table-bordered table-condensed">
+  <tr> <th>Text</th><th>Time</th></tr>
+   <% @tweets.each do |tweet| %>
+	  <tr> 
+
+	   <td><p><%= tweet.text.split("http://")[0] %></p>
+	   <%if tweet.text.split("http://")[1].present? %>  <p> Link:  <a href='http://<%=tweet.text.split("http://")[1] %>'>http://<%=tweet.text.split("http://")[1] %></a></p>
+	   <p> Photo: <img src="<%=tweet.media.to_s.split("media_url")[1].to_s.split('=>"')[1].to_s.split('", :')[0]%>" /> </p>
+	   <% end %>
+	   </td>
+	  
+	   <td><%= tweet.created_at %></td>
+	   </tr>
+   <% end %>
+   </table>

@@ -1,0 +1,62 @@
+<p>
+
+ <%= form_tag '/createalbum' do |f| %>
+	    <div class="field">
+	    <%= label_tag 'Album' %>
+	    <%= text_field_tag 'album' %>
+	  </div>
+	 <div class="actions">
+	    <%= submit_tag "Create" %>
+	  </div>
+ <%end%>
+
+</p>
+
+<h2>Albums & Photos</h2>
+
+<% @fbalbums.each do |album| %>
+<p>Album Name:<%= album['name']%></p>
+<% if album['photos'].present? %>
+<p>Photos:</p>
+<ul class="thumbnails">
+<% album['photos']['data'].each do |data| %>
+ <li class="span4">
+
+	 <a href="<%= data['picture']%>" class="thumbnail">
+	 
+	 <img src="<%= data['picture']%>" alt="">
+	 </a>
+	
+ </li>
+<%end%>
+</ul>
+<% else %>
+<p>No photos in this album</p>
+<%end%>
+</br>
+<%end%>
+
+
+<p>
+
+ <%= form_tag '/createphotos' ,:id =>'photoform' ,  :multipart => true do |f| %>
+	    <div class="field">
+	    <%= label_tag 'Album' %>
+	    <select id="photoform[albump]" name="photoform[albump]">
+			<% @fbalbums.each do |album| %>
+			   <option value="<%=album['id']%>"><%=album['name']%></option>
+			<%end%>
+	      </select>
+	  </div>
+	  
+	  
+	   <div class="field">
+	    <%= label_tag 'Album' %>
+	    <%= file_field_tag 'photo' %>
+	  </div>
+	 <div class="actions">
+	    <%= submit_tag "Upload Photos" %>
+	  </div>
+ <%end%>
+
+</p>

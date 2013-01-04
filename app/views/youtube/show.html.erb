@@ -1,0 +1,20 @@
+<% if $client.present? %> Hi <b><%=$client.profile.username.to_s%></b>, Your Videos <br/> <%end%>
+ <%if @video.present? %>
+ <% if @video.videos.nil? %>
+        No Videos Found. Please Upload Videos.
+ 
+ <%else%>
+  <% @video.videos.each  do |trailer| %>
+                 <h3> <strong><%= trailer.title %></strong></h3> 
+                        
+                  <%= raw  trailer.embed_html5({:class =>".thumbnail > img" , :width => '100%'})%>
+                  <% @arr = trailer.video_id.split(":") %>
+               
+                 <a href="/deletevideo?id=<%=@arr.last%>">  Delete </a>
+    <%end%>
+    <%end%>
+    
+    <%else%>
+    
+       Please Login to Youtube
+      <%end%>

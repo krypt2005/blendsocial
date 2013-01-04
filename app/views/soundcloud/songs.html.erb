@@ -1,0 +1,43 @@
+
+<%if !@me.nil? %>
+<div class="infos">
+  <div class="details">
+    <b>Your SoundCloud User Info:</b>
+    <ul>
+      <li>Username: <%= @me.username %></li>
+      <li>Fullname: <%= @me.full_name %></li>
+      <li>Location: <%= @me.city %>, <%= @me.country %></li>
+    </ul>
+  </div>
+  <%= image_tag(@me.avatar_url, :class => "avatar") %>
+  
+</div>
+
+
+
+<div class="tracks">
+  <b>Your 5 latest tracks</b>
+  <ul>
+    <% @tracks.each do |track| %>
+      <li><%= link_to track.title, track.permalink_url %></li>
+   <% end %>
+  </ul>
+</div>
+
+ <% end %>
+ <br/>
+ 
+ <b>Update Your Souncloud Profile</b><br/><br/>
+ <div class="description">
+  <%= form_tag '/soundcloudupdate', :method => "post" do %>
+   <b>Username:</b>
+    <input type="text" name="username" value="<%= @me.username %>" />
+   <br/>
+    <b>Description:</b>
+    <textarea name="description"><%= @me.description %></textarea><br/>
+    <input type="submit" value="update" />
+ 
+  <% end %>
+</div>
+
+ 
